@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sastrow Coffee - Wonogiri</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="nav-brand">
+            <h1>SASTROW COFFEE</h1>
+        </div>
+        <div class="menu-toggle" id="mobile-menu" onclick="toggleMenu()">
+            ☰
+        </div>
+        <nav class="nav-links" id="nav-links">
+            <a href="#menu-section">Menu</a>
+            <a href="#about-section">Tentang Kami</a>
+            <a href="#location-section">Lokasi</a>
+            <a href="#contact-section">Kontak</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-text">
+            <h2>Sastrow Coffee</h2>
+            <p>Kopi rumahan yang sekarang hadir di Baturetno, Wonogiri.</p>
+        </div>
+    </section>
+
+    <section id="menu-section" class="container">
+        <main class="menu">
+            <div class="search-bar" style="margin-bottom: 1.5rem;">
+                <input type="text" id="search-input" placeholder="Cari kopi kesukaanmu..." oninput="onSearchInput(event)" style="width: 100%; padding: 1rem; border: 1px solid #ddd; border-radius: 8px; font-family: 'Montserrat', sans-serif; font-size: 1rem; outline: none;">
+            </div>
+            <div id="menu-container"></div>
+        </main>
+
+        <aside class="cart">
+            <h2>Keranjang Belanja</h2>
+            <div id="cart-items">
+                <p class="empty-cart">Belum ada pesanan.</p>
+            </div>
+            <div class="total-section">
+                <div class="total">
+                    <span>Subtotal</span>
+                    <span id="total-price">Rp 0</span>
+                </div>
+                <button class="checkout-btn" onclick="checkout()">Checkout Sekarang</button>
+            </div>
+        </aside>
+    </section>
+
+    <section id="testimonials-section" class="info-section">
+        <h2 class="section-title">Apa Kata Mereka?</h2>
+        <div class="testimonials-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+            <div class="testimonial-card" style="background: white; padding: 2rem; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); text-align: center;">
+                <p style="font-style: italic; color: #555; margin-bottom: 1rem; line-height: 1.6;">"Kopi Susu Arennya the best! Rasanya pas, gak terlalu manis. Biji kopinya beneran fresh."</p>
+                <div class="author" style="font-weight: 700; color: #1a1a1a;">- Budi, Mahasiswa</div>
+            </div>
+            <div class="testimonial-card" style="background: white; padding: 2rem; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); text-align: center;">
+                <p style="font-style: italic; color: #555; margin-bottom: 1rem; line-height: 1.6;">"House blend Sastrow bener-bener mantap. Aromanya dapet, asamnya pas, cocok buat ngopi sore."</p>
+                <div class="author" style="font-weight: 700; color: #1a1a1a;">- Siti, Pekerja Kantoran</div>
+            </div>
+            <div class="testimonial-card" style="background: white; padding: 2rem; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); text-align: center;">
+                <p style="font-style: italic; color: #555; margin-bottom: 1rem; line-height: 1.6;">"Pelayanannya ramah banget, packaging rapi. Bakal langganan terus kalau ke Baturetno!"</p>
+                <div class="author" style="font-weight: 700; color: #1a1a1a;">- Agus, Penikmat Kopi</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about-section" class="info-section bg-light">
+        <h2 class="section-title">Tentang Kami</h2>
+        <div class="about-content">
+            <p>Sastrow Coffee kini hadir lebih dekat denganmu di Baturetno, Wonogiri. Kami menyajikan kopi berkualitas tinggi dengan biji kopi pilihan untuk menemani setiap kenangan manismu.</p>
+        </div>
+    </section>
+
+    <section id="location-section" class="info-section">
+        <h2 class="section-title">Lokasi Kami di Baturetno</h2>
+        <div class="map-container">
+            <iframe src="https://maps.google.com/maps?q=Baturetno,+Kabupaten+Wonogiri&hl=id&z=14&output=embed" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </section>
+
+    <section id="contact-section" class="info-section bg-light">
+        <h2 class="section-title">Hubungi Kami</h2>
+        <form class="contact-form" onsubmit="kirimPesan(event)">
+            <input type="text" placeholder="Nama Lengkap" required>
+            <input type="email" placeholder="Email Address" required>
+            <textarea rows="5" placeholder="Tulis pesan untuk outlet Baturetno..." required></textarea>
+            <button type="submit" class="submit-btn">Kirim Pesan</button>
+        </form>
+    </section>
+
+    <div id="checkout-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2>Detail Pembayaran</h2>
+            <form id="payment-form" onsubmit="processPayment(event)">
+                <label for="cust-name">Nama Pemesan</label>
+                <input type="text" id="cust-name" placeholder="Nama Anda..." required>
+
+                <label for="order-type">Tipe Pesanan</label>
+                <select id="order-type">
+                    <option value="Dine In">Makan di Tempat</option>
+                    <option value="Takeaway">Bawa Pulang</option>
+                </select>
+
+                <label for="payment-method">Metode Pembayaran</label>
+                <select id="payment-method" onchange="toggleQRIS()">
+                    <option value="QRIS">QRIS</option>
+                    <option value="Transfer Bank">Transfer Bank</option>
+                    <option value="Tunai">Tunai di Kasir</option>
+                </select>
+
+                <!-- Tempat munculnya Barcode QRIS -->
+                <div id="qris-container" style="text-align: center; margin-top: 1.5rem;">
+                    <p style="font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem;">Scan Barcode QRIS Ini:</p>
+                    <!-- Ini gambar barcode sementara dari internet. Nanti bisa kamu ganti src-nya jadi "public/qris.jpg" -->
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=Pembayaran%20Sastrow%20Coffee" alt="QRIS Barcode" style="width: 180px; padding: 10px; border: 1px solid #ddd; border-radius: 8px;">
+                    <p style="font-size: 0.75rem; color: #888; margin-top: 0.5rem;">Nanti file fotonya bisa diganti jadi public/qris.jpg</p>
+                </div>
+
+                <div class="modal-total">
+                    Total: <span id="modal-total-price">Rp 0</span>
+                </div>
+
+                <button type="submit" class="pay-btn">Lanjutkan ke WhatsApp</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="product-detail-modal" class="modal">
+        <div class="modal-content" style="max-width: 400px; padding: 0; overflow: hidden;">
+            <span class="close-btn" onclick="closeProductModal()" style="color: white; text-shadow: 0 1px 3px rgba(0,0,0,0.5); z-index: 10;">&times;</span>
+            <img id="detail-modal-img" src="" alt="" style="width: 100%; height: 250px; object-fit: cover;">
+            <div style="padding: 1.5rem;">
+                <h2 id="detail-modal-title" style="margin-bottom: 0.5rem;">Title</h2>
+                <div id="detail-modal-price" class="price" style="font-size: 1.2rem; margin-bottom: 1rem; color: #e63946;">Rp 0</div>
+                <p id="detail-modal-desc" style="color: #555; line-height: 1.6; margin-bottom: 1.5rem;">Deskripsi</p>
+                <button id="detail-add-btn">Tambah ke Keranjang</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 Sastrow Coffee Baturetno, Wonogiri.</p>
+    </footer>
+
+    <div id="toast" class="toast"></div>
+    <script src="script.js"></script>
+</body>
+</html>
